@@ -41,7 +41,14 @@ export const jokesSlice = createSlice({
       })
       .addCase(fetchAllJokes.fulfilled, (state, action) => {
         state.isLoading = false
-        state.jokeList = action.payload
+        state.jokeList = action.payload.map((joke: jokeType) => ({
+          id: joke.id ? Number(joke.id) : '-',
+          title: joke.title || '-',
+          body: joke.title || '-',
+          author: joke.author || '-',
+          views: joke.views ? Number(joke.views) : '-',
+          createdAt: joke.createdAt || '-'
+        }))
       })
       .addCase(fetchAllJokes.rejected, state => {
         state.isLoading = false

@@ -3,6 +3,6 @@ export interface jokeType {
   title?: string
   body?: string
   author?: string
-  views?: number | number
+  views?: number | string
   createdAt?: number | string
 }
