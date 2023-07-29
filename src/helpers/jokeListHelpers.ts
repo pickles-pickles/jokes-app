@@ -19,3 +19,26 @@ export function cleanAndConvertViews (views?: string | number) {
   }
   return '-'
 }
+
+export function mapColorToViews (views?: string | number) {
+  const clearViews = cleanAndConvertViews(views)
+  const tomato = 'tomato',
+    orange = 'orange',
+    yellow = 'yellow',
+    green = 'green'
+  if (typeof clearViews !== 'number') {
+    return ''
+  } else {
+    if (0 < clearViews && clearViews <= 25) {
+      return tomato
+    } else if (25 < clearViews && clearViews <= 50) {
+      return orange
+    } else if (50 < clearViews && clearViews <= 75) {
+      return yellow
+    } else if (75 < clearViews && clearViews <= 100) {
+      return green
+    } else {
+      return ''
+    }
+  }
+}

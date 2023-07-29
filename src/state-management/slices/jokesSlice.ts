@@ -3,7 +3,10 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../../store'
 import { jokeType } from '../../types/types'
 import { getAllJokes } from '../../services/jokesService.ts'
-import { cleanAndConvertViews } from '../../helpers/jokeListHelpers.ts'
+import {
+  cleanAndConvertViews,
+  mapColorToViews
+} from '../../helpers/jokeListHelpers.ts'
 
 // Define a type for the slice state
 interface JokesState {
@@ -49,7 +52,8 @@ export const jokesSlice = createSlice({
           body: joke.body || '-',
           author: joke.author || '-',
           views: cleanAndConvertViews(joke.views),
-          createdAt: joke.createdAt || '-'
+          createdAt: joke.createdAt || '-',
+          viewsColor: mapColorToViews(joke.views)
         }))
       })
       .addCase(fetchAllJokes.rejected, state => {

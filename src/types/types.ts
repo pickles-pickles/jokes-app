@@ -6,3 +6,7 @@ export interface jokeType {
   views?: number | string
   createdAt?: number | string
 }
+
+export interface JokeToRender extends jokeType {
+  viewsColor?: string
+}
