@@ -26,6 +26,6 @@ export const logInSlice = createSlice({
 export const { setIsLoggedIn } = logInSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
-export const isLoggedInSelector = (state: RootState) => state.isLoggedIn
+export const isLoggedInSelector = (state: RootState) => state.login.isLoggedIn
 
 export default logInSlice.reducer
