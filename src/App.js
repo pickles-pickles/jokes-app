@@ -16,6 +16,7 @@ import {
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import appTheme from './styling/theme.ts'
 import CssBaseline from '@mui/material/CssBaseline'
+import JokeEditorPage from './pages/joke-editor-page/JokeEditorPage.tsx'
 
 function App () {
   const dispatch = useDispatch()
@@ -50,6 +51,14 @@ function App () {
             element={
               <PrivateRoute>
                 <HomePage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path='/joke-editor'
+            element={
+              <PrivateRoute>
+                <JokeEditorPage />
               </PrivateRoute>
             }
           />
