@@ -10,8 +10,12 @@ export function cleanAndConvertViews (views?: string | number) {
     if (!isNaN(integerValue)) {
       // Update the "views" value in the object with the cleaned integer value
       return integerValue
+    } else {
+      // Handle the case when the "views" value cannot be converted to an integer
+      return '-'
     }
+  } else if (typeof views === 'number') {
+    return views
   }
-  // Handle the case when the "views" value cannot be converted to an integer
   return '-'
 }

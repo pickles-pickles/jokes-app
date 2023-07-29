@@ -46,7 +46,7 @@ export const jokesSlice = createSlice({
         state.jokeList = action.payload.map((joke: jokeType) => ({
           id: joke.id ? Number(joke.id) : '-',
           title: joke.title || '-',
-          body: joke.title || '-',
+          body: joke.body || '-',
           author: joke.author || '-',
           views: cleanAndConvertViews(joke.views),
           createdAt: joke.createdAt || '-'
