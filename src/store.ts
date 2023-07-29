@@ -1,7 +1,8 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import loginSlice from './state-management/slices/loginSlice.ts'
 
 export const store = configureStore({
-  reducer: {}
+  reducer: combineReducers({ login: loginSlice })
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
