@@ -1,15 +1,7 @@
 import axios from 'axios'
+import { jokeType } from '../types/types'
 
-interface jokeType {
-  id?: number
-  title?: string
-  body?: string
-  author?: string
-  views?: number | number
-  createdAt?: number | string
-}
-
-const BASE_URL = 'https://example-api.com/zu9TVE'
+const BASE_URL = 'https://retoolapi.dev/zu9TVE'
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL
