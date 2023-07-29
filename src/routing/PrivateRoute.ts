@@ -1,5 +1,5 @@
 import { redirect } from 'react-router-dom'
-import { isLoggedInSelector } from '../state-management/slices/loginSlice.ts'
+import { isLoggedInSelector } from '../state-management/slices/appSlice.ts'
 import { useSelector } from 'react-redux'
 
 const PrivateRoute = ({ children }) => {

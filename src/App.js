@@ -4,23 +4,57 @@ import LandingPage from './pages/landing-page/LandingPage.tsx'
 import LoginPage from './pages/login-page/LoginPage.tsx'
 import PrivateRoute from './routing/PrivateRoute.ts'
 import HomePage from './pages/home-page/HomePage.tsx'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import {
+  isDarkThemeSelector,
+  setDarkTheme,
+  setLightTheme
+} from './state-management/slices/appSlice.ts'
+//import { createTheme, ThemeProvider } from '@mui/material'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
+import appTheme from './styling/theme.ts'
+import CssBaseline from '@mui/material/CssBaseline'
 
 function App () {
+  const dispatch = useDispatch()
+  const isDarkTheme = useSelector(isDarkThemeSelector)
+
+  // Check for theme preference in local storage on initial load
+  useEffect(() => {
+    const storedTheme = localStorage.getItem('theme')
+    if (storedTheme === 'dark') {
+      dispatch(setDarkTheme())
+    } else {
+      dispatch(setLightTheme())
+    }
+  }, [dispatch])
+
+  // Save the theme preference to local storage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light')
+    console.log(appTheme(isDarkTheme))
+  }, [isDarkTheme])
+
+  const theme = createTheme(appTheme(isDarkTheme))
   return (
     <div className='App'>
-      <Routes>
-        <Route path='/' element={<LandingPage />} />
-        <Route path='/login' element={<LoginPage />} />
-        <Route
-          path='/home'
-          element={
-            <PrivateRoute>
-              <HomePage />
-            </PrivateRoute>
-          }
-        />
-      </Routes>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Routes>
+          <Route path='/' element={<LandingPage />} />
+          <Route path='/login' element={<LoginPage />} />
+          <Route
+            path='/home'
+            element={
+              <PrivateRoute>
+                <HomePage />
+              </PrivateRoute>
+            }
+          />
+        </Routes>
+      </ThemeProvider>
     </div>
   )
 }
