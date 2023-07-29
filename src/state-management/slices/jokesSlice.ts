@@ -3,6 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../../store'
 import { jokeType } from '../../types/types'
 import { getAllJokes } from '../../services/jokesService.ts'
+import { cleanAndConvertViews } from '../../helpers/jokeListHelpers.ts'
 
 // Define a type for the slice state
 interface JokesState {
@@ -41,12 +42,13 @@ export const jokesSlice = createSlice({
       })
       .addCase(fetchAllJokes.fulfilled, (state, action) => {
         state.isLoading = false
+
         state.jokeList = action.payload.map((joke: jokeType) => ({
           id: joke.id ? Number(joke.id) : '-',
           title: joke.title || '-',
           body: joke.title || '-',
           author: joke.author || '-',
-          views: joke.views ? Number(joke.views) : '-',
+          views: cleanAndConvertViews(joke.views),
           createdAt: joke.createdAt || '-'
         }))
       })

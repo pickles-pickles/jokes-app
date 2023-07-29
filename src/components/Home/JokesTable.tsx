@@ -7,6 +7,8 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
+import { useSelector } from 'react-redux'
+import { jokeListSelector } from '../../state-management/slices/jokesSlice.ts'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -38,6 +40,8 @@ const JokesTable = () => {
     { name: 'CREATED AT' }
   ]
 
+  const jokeList = useSelector(jokeListSelector)
+
   return (
     <>
       <TableContainer component={Paper}>
@@ -45,11 +49,23 @@ const JokesTable = () => {
           <TableHead>
             <TableRow>
               {headerColumns.map(col => (
-                <StyledTableCell align='left'>{col.name}</StyledTableCell>
+                <StyledTableCell align='left' key={col.name}>
+                  {col.name}
+                </StyledTableCell>
               ))}
             </TableRow>
           </TableHead>
-          <TableBody></TableBody>
+          <TableBody>
+            {jokeList.map(joke => (
+              <StyledTableRow key={joke.id}>
+                {Object.values(joke).map((jokeProp, idx) => (
+                  <StyledTableCell align='left' key={idx}>
+                    {jokeProp}
+                  </StyledTableCell>
+                ))}
+              </StyledTableRow>
+            ))}
+          </TableBody>
         </Table>
       </TableContainer>
     </>
