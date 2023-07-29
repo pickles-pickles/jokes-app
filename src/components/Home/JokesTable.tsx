@@ -19,6 +19,7 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft'
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 import LastPageIcon from '@mui/icons-material/LastPage'
 import { TablePaginationActionsProps } from '@mui/material/TablePagination/TablePaginationActions'
+import Moment from 'react-moment'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -169,7 +170,14 @@ const JokesTable = () => {
                   {joke.views}
                 </StyledTableCell>
 
-                <StyledTableCell align='left'>{joke.createdAt}</StyledTableCell>
+                <StyledTableCell align='left'>
+                  {' '}
+                  {joke.createdAt ? (
+                    <Moment format='D MMM YYYY'>{joke.createdAt}</Moment>
+                  ) : (
+                    '-'
+                  )}
+                </StyledTableCell>
               </StyledTableRow>
             ))}
             {emptyRows > 0 && (

@@ -42,3 +42,14 @@ export function mapColorToViews (views?: string | number) {
     }
   }
 }
+
+export function convertDate (date: any) {
+  if (typeof date === 'number') {
+    const unixTimeToDate = new Date(date).toISOString()
+    return unixTimeToDate
+  }
+  if (!date) {
+    return undefined
+  }
+  return date
+}

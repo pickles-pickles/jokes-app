@@ -5,6 +5,7 @@ import { jokeType } from '../../types/types'
 import { getAllJokes } from '../../services/jokesService.ts'
 import {
   cleanAndConvertViews,
+  convertDate,
   mapColorToViews
 } from '../../helpers/jokeListHelpers.ts'
 
@@ -25,6 +26,7 @@ export const fetchAllJokes = createAsyncThunk(
   async () => {
     const response = await getAllJokes()
     const data = await response.data
+    console.log(data)
     return data
   }
 )
@@ -52,7 +54,7 @@ export const jokesSlice = createSlice({
           body: joke.body || '-',
           author: joke.author || '-',
           views: cleanAndConvertViews(joke.views),
-          createdAt: joke.createdAt || '-',
+          createdAt: convertDate(joke.createdAt),
           viewsColor: mapColorToViews(joke.views)
         }))
       })
