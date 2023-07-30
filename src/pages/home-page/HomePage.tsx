@@ -21,7 +21,6 @@ const HomePage = () => {
   const handleNewJokeClick = () => {
     dispatch(
       setJokeToEdit({
-        id: '',
         title: '',
         body: '',
         author: '',

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { Button } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import {
+  createJokeThunk,
   deleteJokeThunk,
   isNewJokeSelector,
   jokeToEditSelector,
@@ -34,7 +35,9 @@ const JokeEditorButtons = () => {
     submitDeleteJoke = () => {
       dispatch(deleteJokeThunk(jokeToEdit.id!))
     },
-    submitNewJoke = () => {}
+    submitNewJoke = () => {
+      dispatch(createJokeThunk(jokeToEdit))
+    }
   return (
     <>
       <StyledButton variant='contained'>

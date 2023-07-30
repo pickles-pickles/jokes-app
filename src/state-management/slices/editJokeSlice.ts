@@ -1,6 +1,10 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { jokeType } from '../../types/types'
-import { updateJoke, deleteJoke } from '../../services/jokesService.ts'
+import {
+  updateJoke,
+  deleteJoke,
+  createJoke
+} from '../../services/jokesService.ts'
 import { RootState } from '../../store.ts'
 
 // Define a type for the slice state
@@ -34,6 +38,16 @@ export const deleteJokeThunk = createAsyncThunk(
     const response = await deleteJoke(id)
     const data = await response.data
     console.log('RESPONSE data from thunk', data)
+    return data
+  }
+)
+
+export const createJokeThunk = createAsyncThunk(
+  'jokes/createJoke',
+  async (jokeData: jokeType) => {
+    const response = await createJoke(jokeData)
+    const data = await response.data
+    console.log('RESPONSE data from create thunk', data)
     return data
   }
 )
@@ -77,6 +91,19 @@ export const editJokeSlice = createSlice({
       .addCase(deleteJokeThunk.rejected, state => {
         state.isLoading = false
         console.log('delete rejected')
+      })
+      // * CREATE
+      .addCase(createJokeThunk.pending, state => {
+        state.isLoading = true
+        console.log('create pending')
+      })
+      .addCase(createJokeThunk.fulfilled, state => {
+        state.isLoading = false
+        console.log('create fulfilled')
+      })
+      .addCase(createJokeThunk.rejected, state => {
+        state.isLoading = false
+        console.log('create rejected')
       })
   }
 })
