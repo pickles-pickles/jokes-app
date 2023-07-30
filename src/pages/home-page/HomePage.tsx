@@ -2,15 +2,21 @@ import React, { useEffect } from 'react'
 import JokesTable from '../../components/Home/JokesTable.tsx'
 import Grid from '@mui/material/Grid'
 import { useDispatch } from 'react-redux'
-import { fetchAllJokes } from '../../state-management/slices/jokesSlice.ts'
+import {
+  fetchAllJokes,
+  jokeListErrorSelector,
+  jokeListIsLoadingSelector,
+  jokeListSuccessSelector
+} from '../../state-management/slices/jokesSlice.ts'
 import { AppDispatch } from '../../store.ts'
 import { Link } from 'react-router-dom'
-import { Button } from '@mui/material'
+import { Button, LinearProgress } from '@mui/material'
 import {
   setIsNewJoke,
   setJokeToEdit
 } from '../../state-management/slices/editJokeSlice.ts'
 import { styled } from '@mui/material/styles'
+import { useSelector } from 'react-redux'
 
 const StyledLink = styled(Link)(({ theme }) => ({
   color: theme.palette.text.secondary
@@ -18,6 +24,9 @@ const StyledLink = styled(Link)(({ theme }) => ({
 
 const HomePage = () => {
   const dispatch = useDispatch<AppDispatch>()
+  const isLoading = useSelector(jokeListIsLoadingSelector),
+    error = useSelector(jokeListErrorSelector),
+    success = useSelector(jokeListSuccessSelector)
 
   useEffect(() => {
     dispatch(fetchAllJokes())
@@ -45,7 +54,15 @@ const HomePage = () => {
       </Button>
       <Grid container spacing={2} alignItems='center' justifyContent='center'>
         <Grid item xs={10}>
-          <JokesTable />
+          {isLoading && (
+            <>
+              <LinearProgress color='secondary' />
+              <LinearProgress color='success' />
+              <LinearProgress color='inherit' />
+            </>
+          )}
+          {success && <JokesTable />}
+          {error && 'Something went wrong'}
         </Grid>
       </Grid>
     </>

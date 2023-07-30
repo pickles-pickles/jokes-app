@@ -15,28 +15,24 @@ interface JokesState {
   jokeList: jokeType[]
   isLoading: boolean
   error: any
+  success: boolean
 }
 
 // Define the initial state using that type
 const initialState: JokesState = {
   jokeList: [],
   isLoading: false,
-  error: null
+  error: null,
+  success: false
 }
 
 export const fetchAllJokes = createAsyncThunk(
   'jokes/fetchAllJokes',
   async () => {
-    try {
-      const response = await getAllJokes()
-      const data = await response.data
-      console.log(data)
-      return data
-    } catch (err) {
-      const error = await err
-
-      return error
-    }
+    const response = await getAllJokes()
+    const data = await response.data
+    console.log(data)
+    return data
   }
 )
 
@@ -53,6 +49,7 @@ export const jokesSlice = createSlice({
     builder
       .addCase(fetchAllJokes.pending, state => {
         state.isLoading = true
+        state.success = false
       })
       .addCase(fetchAllJokes.fulfilled, (state, action) => {
         state.jokeList = action.payload.map((joke: jokeType) => ({
@@ -66,6 +63,7 @@ export const jokesSlice = createSlice({
         }))
 
         state.isLoading = false
+        state.success = true
       })
       .addCase(fetchAllJokes.rejected, (state, action) => {
         state.isLoading = false
@@ -79,6 +77,9 @@ export const { setJokeList } = jokesSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const jokeListSelector = (state: RootState) => state.jokes.jokeList
+export const jokeListIsLoadingSelector = (state: RootState) =>
+  state.jokes.isLoading
 export const jokeListErrorSelector = (state: RootState) => state.jokes.error
+export const jokeListSuccessSelector = (state: RootState) => state.jokes.success
 
 export default jokesSlice.reducer
