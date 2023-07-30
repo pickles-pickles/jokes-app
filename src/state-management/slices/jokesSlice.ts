@@ -6,7 +6,8 @@ import { getAllJokes } from '../../services/jokesService.ts'
 import {
   cleanAndConvertViews,
   convertDate,
-  mapColorToViews
+  mapColorToViews,
+  maskEmail
 } from '../../helpers/jokeListHelpers.ts'
 
 // Define a type for the slice state
@@ -52,7 +53,7 @@ export const jokesSlice = createSlice({
           id: joke.id ? Number(joke.id) : '-',
           title: joke.title || '-',
           body: joke.body || '-',
-          author: joke.author || '-',
+          author: maskEmail(joke.author),
           views: cleanAndConvertViews(joke.views),
           createdAt: convertDate(joke.createdAt),
           viewsColor: mapColorToViews(joke.views)

@@ -53,3 +53,24 @@ export function convertDate (date: any) {
   }
   return date
 }
+
+const isAuthorValidEmail = (email: string) => {
+  // Regular expression for basic email format validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return emailRegex.test(email)
+}
+
+export function maskEmail (author?: string) {
+  if (!author) return '-'
+
+  if (isAuthorValidEmail(author)) {
+    const [username, domain] = author.split('@')
+    const lastDotIndex = domain.lastIndexOf('.')
+    const maskedDomain =
+      domain.substring(0, lastDotIndex).replace(/./g, '*') + // Replace each character with '*'
+      domain.substring(lastDotIndex)
+    return `${username}@${maskedDomain}`
+  } else {
+    return author
+  }
+}
