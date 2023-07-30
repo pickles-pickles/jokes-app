@@ -10,6 +10,11 @@ import {
   setIsNewJoke,
   setJokeToEdit
 } from '../../state-management/slices/editJokeSlice.ts'
+import { styled } from '@mui/material/styles'
+
+const StyledLink = styled(Link)(({ theme }) => ({
+  color: theme.palette.text.secondary
+}))
 
 const HomePage = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -33,12 +38,12 @@ const HomePage = () => {
   return (
     <>
       <h1>Hello from Home page</h1>
-      <Button variant='contained'>
-        <Link to='/joke-editor' onClick={handleNewJokeClick}>
+      <Button variant='contained' style={{ marginBottom: 10 }}>
+        <StyledLink to='/joke-editor' onClick={handleNewJokeClick}>
           New joke
-        </Link>
+        </StyledLink>
       </Button>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} alignItems='center' justifyContent='center'>
         <Grid item xs={10}>
           <JokesTable />
         </Grid>

@@ -41,13 +41,18 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
-    borderRight: `2px solid ${theme.palette.text.primary}`
+    borderRight: `2px solid ${theme.palette.text.primary}`,
+    backgroundColor: theme.palette.tableBackground.main
   },
   borderRight: `2px solid ${theme.palette.text.primary}`,
   '&:last-child, &:last-child td': {
     borderRight: 0
   },
   borderBottom: 0
+}))
+
+const StyledLink = styled(Link)(({ theme }) => ({
+  color: theme.palette.text.primary
 }))
 
 function TablePaginationActions (props: TablePaginationActionsProps) {
@@ -169,7 +174,7 @@ const JokesTable = () => {
               <StyledTableRow key={joke.id}>
                 <StyledTableCell align='left'>{joke.id}</StyledTableCell>
                 <StyledTableCell align='left'>
-                  <Link
+                  <StyledLink
                     to='/joke-editor'
                     onClick={() => {
                       const { id, title, body, author, views, createdAt } = joke
@@ -186,7 +191,7 @@ const JokesTable = () => {
                     }}
                   >
                     {joke.title}
-                  </Link>
+                  </StyledLink>
                 </StyledTableCell>
                 <StyledTableCell align='left'>{joke.body}</StyledTableCell>
                 <StyledTableCell align='left'>{joke.author}</StyledTableCell>
