@@ -33,12 +33,6 @@ const JokeEditorPage = () => {
     console.log('joke to edit', jokeToEdit)
   }, [jokeToEdit])
 
-  /* useEffect(() => {
-    return () => {
-      dispatch(setJokeToEdit({}))
-    }
-  }, []) */
-
   const submitJoke = () => {
       dispatch(updateJokeThunk(jokeToEdit))
     },

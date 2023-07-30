@@ -15,6 +15,21 @@ const JokeEditorForm = () => {
     const { name, value } = e.target
     dispatch(setJokeToEdit({ ...jokeToEdit, [name]: value }))
   }
+
+  /* React.useEffect(() => {
+    return () => {
+      dispatch(
+        setJokeToEdit({
+          id: '',
+          title: '',
+          body: '',
+          author: '',
+          views: '',
+          createdAt: ''
+        })
+      )
+    }
+  }, []) */
   return (
     <>
       <h2>Hello from jokes editor form</h2>
