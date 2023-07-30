@@ -1,5 +1,5 @@
 export interface jokeType {
-  id?: number
+  id?: number | string
   title?: string
   body?: string
   author?: string

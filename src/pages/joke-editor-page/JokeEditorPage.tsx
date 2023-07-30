@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import JokeEditorForm from '../../components/JokeEditor/JokesEditorForm.tsx'
 import { useSelector } from 'react-redux'
 import {
+  deleteJokeThunk,
   jokeToEditSelector,
   updateJokeThunk
 } from '../../state-management/slices/editJokeSlice.ts'
@@ -16,13 +17,17 @@ const JokeEditorPage = () => {
   }, [jokeToEdit])
 
   const submitJoke = () => {
-    dispatch(updateJokeThunk(jokeToEdit))
-  }
+      dispatch(updateJokeThunk(jokeToEdit))
+    },
+    submitDeleteJoke = () => {
+      dispatch(deleteJokeThunk(jokeToEdit.id!))
+    }
   return (
     <>
       <h1>Hello from Joke editor page</h1>
       <JokeEditorForm />
       <button onClick={submitJoke}>update joke</button>
+      <button onClick={submitDeleteJoke}>delete joke</button>
     </>
   )
 }
