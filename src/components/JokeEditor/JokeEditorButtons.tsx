@@ -3,6 +3,7 @@ import { Button } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import {
   deleteJokeThunk,
+  isNewJokeSelector,
   jokeToEditSelector,
   setJokeToEdit,
   updateJokeThunk
@@ -24,14 +25,16 @@ const StyledLink = styled(Link)(({ theme }) => ({
 
 const JokeEditorButtons = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const jokeToEdit = useSelector(jokeToEditSelector)
+  const jokeToEdit = useSelector(jokeToEditSelector),
+    isNewJoke = useSelector(isNewJokeSelector)
 
   const submitJoke = () => {
       dispatch(updateJokeThunk(jokeToEdit))
     },
     submitDeleteJoke = () => {
       dispatch(deleteJokeThunk(jokeToEdit.id!))
-    }
+    },
+    submitNewJoke = () => {}
   return (
     <>
       <StyledButton variant='contained'>
@@ -40,16 +43,32 @@ const JokeEditorButtons = () => {
         </StyledLink>
       </StyledButton>
 
-      <StyledButton variant='contained' color='success' onClick={submitJoke}>
-        update joke
-      </StyledButton>
-      <StyledButton
-        variant='contained'
-        color='secondary'
-        onClick={submitDeleteJoke}
-      >
-        delete joke
-      </StyledButton>
+      {isNewJoke ? (
+        <StyledButton
+          variant='contained'
+          color='secondary'
+          onClick={submitNewJoke}
+        >
+          Submit new joke
+        </StyledButton>
+      ) : (
+        <>
+          <StyledButton
+            variant='contained'
+            color='success'
+            onClick={submitJoke}
+          >
+            update joke
+          </StyledButton>
+          <StyledButton
+            variant='contained'
+            color='secondary'
+            onClick={submitDeleteJoke}
+          >
+            delete joke
+          </StyledButton>
+        </>
+      )}
     </>
   )
 }

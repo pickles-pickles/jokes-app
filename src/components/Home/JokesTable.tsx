@@ -20,7 +20,10 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 import LastPageIcon from '@mui/icons-material/LastPage'
 import { TablePaginationActionsProps } from '@mui/material/TablePagination/TablePaginationActions'
 import Moment from 'react-moment'
-import { setJokeToEdit } from '../../state-management/slices/editJokeSlice.ts'
+import {
+  setIsNewJoke,
+  setJokeToEdit
+} from '../../state-management/slices/editJokeSlice.ts'
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   // hide last border in the row
@@ -179,6 +182,7 @@ const JokesTable = () => {
                         createdAt
                       }
                       dispatch(setJokeToEdit(plainJoke))
+                      dispatch(setIsNewJoke(false))
                     }}
                   >
                     {joke.title}

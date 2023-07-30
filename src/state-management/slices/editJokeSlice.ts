@@ -7,12 +7,14 @@ import { RootState } from '../../store.ts'
 interface editJokeState {
   jokeToEdit: jokeType
   isLoading: boolean
+  isNewJoke: boolean
 }
 
 // Define the initial state using that type
 const initialState: editJokeState = {
   jokeToEdit: {},
-  isLoading: false
+  isLoading: false,
+  isNewJoke: false
 }
 
 export const updateJokeThunk = createAsyncThunk(
@@ -43,6 +45,9 @@ export const editJokeSlice = createSlice({
   reducers: {
     setJokeToEdit: (state, action: PayloadAction<jokeType>) => {
       state.jokeToEdit = action.payload
+    },
+    setIsNewJoke: (state, action) => {
+      state.isNewJoke = action.payload
     }
   },
   extraReducers: builder => {
@@ -76,10 +81,11 @@ export const editJokeSlice = createSlice({
   }
 })
 
-export const { setJokeToEdit } = editJokeSlice.actions
+export const { setJokeToEdit, setIsNewJoke } = editJokeSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const jokeToEditSelector = (state: RootState) =>
   state.editJoke.jokeToEdit
+export const isNewJokeSelector = (state: RootState) => state.editJoke.isNewJoke
 
 export default editJokeSlice.reducer
