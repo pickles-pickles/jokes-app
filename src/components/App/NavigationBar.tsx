@@ -31,7 +31,7 @@ const NavigationBar = () => {
         <AppBar position='static'>
           <Toolbar>
             <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
-              <StyledNavLink to='home'>Home</StyledNavLink>
+              <StyledNavLink to='/home'>Home</StyledNavLink>
             </Typography>
             <Box sx={{ flexGrow: 1 }}>
               <ThemeToggler />
