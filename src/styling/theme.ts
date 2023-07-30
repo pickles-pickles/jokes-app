@@ -6,7 +6,8 @@ const appTheme = (isDarkTheme: boolean) => ({
     },
     background: {
       default: isDarkTheme ? '#000000' : '#ffffff',
-      paper: isDarkTheme ? '#000000' : '#ffffff'
+      paper: isDarkTheme ? '#000000' : '#ffffff',
+      nav: isDarkTheme ? '#ffffff' : '#d2d2d2'
     },
     text: {
       primary: isDarkTheme ? '#ffffff' : '#000000',
