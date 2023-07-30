@@ -14,21 +14,29 @@ import {
 interface JokesState {
   jokeList: jokeType[]
   isLoading: boolean
+  error: any
 }
 
 // Define the initial state using that type
 const initialState: JokesState = {
   jokeList: [],
-  isLoading: false
+  isLoading: false,
+  error: null
 }
 
 export const fetchAllJokes = createAsyncThunk(
   'jokes/fetchAllJokes',
   async () => {
-    const response = await getAllJokes()
-    const data = await response.data
-    console.log(data)
-    return data
+    try {
+      const response = await getAllJokes()
+      const data = await response.data
+      console.log(data)
+      return data
+    } catch (err) {
+      const error = await err
+
+      return error
+    }
   }
 )
 
@@ -47,8 +55,6 @@ export const jokesSlice = createSlice({
         state.isLoading = true
       })
       .addCase(fetchAllJokes.fulfilled, (state, action) => {
-        state.isLoading = false
-
         state.jokeList = action.payload.map((joke: jokeType) => ({
           id: joke.id ? Number(joke.id) : '-',
           title: joke.title || '-',
@@ -58,10 +64,13 @@ export const jokesSlice = createSlice({
           createdAt: convertDate(joke.createdAt),
           viewsColor: mapColorToViews(joke.views)
         }))
+
+        state.isLoading = false
       })
-      .addCase(fetchAllJokes.rejected, state => {
+      .addCase(fetchAllJokes.rejected, (state, action) => {
         state.isLoading = false
         state.jokeList = []
+        state.error = action.error
       })
   }
 })
@@ -70,5 +79,6 @@ export const { setJokeList } = jokesSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const jokeListSelector = (state: RootState) => state.jokes.jokeList
+export const jokeListErrorSelector = (state: RootState) => state.jokes.error
 
 export default jokesSlice.reducer

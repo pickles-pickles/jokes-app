@@ -1,24 +1,42 @@
 import { Container, Grid, TextField } from '@mui/material'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { AppDispatch } from '../../store'
 import { useDispatch, useSelector } from 'react-redux'
 import {
+  jokeToEditErrorSelector,
   jokeToEditSelector,
+  setEditJokeError,
   setJokeToEdit
 } from '../../state-management/slices/editJokeSlice.ts'
+import AppSnackbar from '../App/AppSnackbar.tsx'
 
 const JokeEditorForm = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const jokeToEdit = useSelector(jokeToEditSelector)
+  const jokeToEdit = useSelector(jokeToEditSelector),
+    jokeToEditError = useSelector(jokeToEditErrorSelector)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     dispatch(setJokeToEdit({ ...jokeToEdit, [name]: value }))
   }
 
+  useEffect(() => {
+    return () => {
+      dispatch(setEditJokeError(false))
+    }
+  }, [])
+
   return (
     <>
       <h2>Hello from jokes editor form</h2>
+      {
+        <AppSnackbar
+          severity='error'
+          message={JSON.stringify(jokeToEditError?.message)}
+          openingCondition={jokeToEditError}
+        />
+      }
+      {/* {jokeToEditError && JSON.stringify(jokeToEditError?.message)} */}
       <Container maxWidth='sm'>
         <form>
           <Grid container spacing={2}>
