@@ -10,7 +10,7 @@ const appTheme = (isDarkTheme: boolean) => ({
     },
     text: {
       primary: isDarkTheme ? '#ffffff' : '#000000',
-      secondary: isDarkTheme ? '#ffffff' : '#000000'
+      secondary: isDarkTheme ? '#ffffff' : '#d2d2d2'
     }
   }
 })

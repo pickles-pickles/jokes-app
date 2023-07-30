@@ -25,7 +25,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   // hide last border in the row
   '&:last-child td, &:last-child th': {
     border: 0,
-    borderRight: `2px solid ${theme.palette.text.primary}`
+    borderRight: `2px solid ${theme.palette.text.primary}`,
+    borderBottom: `2px solid ${theme.palette.text.secondary}`
   }
 }))
 
