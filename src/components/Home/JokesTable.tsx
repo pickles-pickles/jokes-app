@@ -9,7 +9,7 @@ import TableRow from '@mui/material/TableRow'
 import TableFooter from '@mui/material/TableFooter'
 import TablePagination from '@mui/material/TablePagination'
 import Paper from '@mui/material/Paper'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { jokeListSelector } from '../../state-management/slices/jokesSlice.ts'
 import { Link } from 'react-router-dom'
 import { JokeToRender } from '../../types/types.ts'
@@ -20,6 +20,7 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight'
 import LastPageIcon from '@mui/icons-material/LastPage'
 import { TablePaginationActionsProps } from '@mui/material/TablePagination/TablePaginationActions'
 import Moment from 'react-moment'
+import { setJokeToEdit } from '../../state-management/slices/editJokeSlice.ts'
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   // hide last border in the row
@@ -117,6 +118,7 @@ const JokesTable = () => {
     { name: 'CREATED AT' }
   ]
 
+  const dispatch = useDispatch()
   const jokeList = useSelector(jokeListSelector)
 
   const [page, setPage] = React.useState(0)
@@ -164,7 +166,23 @@ const JokesTable = () => {
               <StyledTableRow key={joke.id}>
                 <StyledTableCell align='left'>{joke.id}</StyledTableCell>
                 <StyledTableCell align='left'>
-                  <Link to='/joke-editor'>{joke.title}</Link>
+                  <Link
+                    to='/joke-editor'
+                    onClick={() => {
+                      const { id, title, body, author, views, createdAt } = joke
+                      const plainJoke = {
+                        id,
+                        title,
+                        body,
+                        author,
+                        views,
+                        createdAt
+                      }
+                      dispatch(setJokeToEdit(plainJoke))
+                    }}
+                  >
+                    {joke.title}
+                  </Link>
                 </StyledTableCell>
                 <StyledTableCell align='left'>{joke.body}</StyledTableCell>
                 <StyledTableCell align='left'>{joke.author}</StyledTableCell>
