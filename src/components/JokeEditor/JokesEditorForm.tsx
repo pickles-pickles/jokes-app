@@ -5,7 +5,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   jokeToEditErrorSelector,
   jokeToEditSelector,
+  jokeToEditSuccessSelector,
   setEditJokeError,
+  setEditJokeSuccess,
   setJokeToEdit
 } from '../../state-management/slices/editJokeSlice.ts'
 import AppSnackbar from '../App/AppSnackbar.tsx'
@@ -13,7 +15,8 @@ import AppSnackbar from '../App/AppSnackbar.tsx'
 const JokeEditorForm = () => {
   const dispatch = useDispatch<AppDispatch>()
   const jokeToEdit = useSelector(jokeToEditSelector),
-    jokeToEditError = useSelector(jokeToEditErrorSelector)
+    jokeToEditError = useSelector(jokeToEditErrorSelector),
+    jokeToEditSuccess = useSelector(jokeToEditSuccessSelector)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -23,12 +26,12 @@ const JokeEditorForm = () => {
   useEffect(() => {
     return () => {
       dispatch(setEditJokeError(false))
+      dispatch(setEditJokeSuccess(false))
     }
-  }, [])
+  }, [dispatch])
 
   return (
     <>
-      <h2>Hello from jokes editor form</h2>
       {
         <AppSnackbar
           severity='error'
@@ -36,6 +39,15 @@ const JokeEditorForm = () => {
           openingCondition={jokeToEditError}
         />
       }
+      {
+        <AppSnackbar
+          severity='success'
+          message={'Request submitted successfully'}
+          openingCondition={jokeToEditSuccess}
+        />
+      }
+      <h2>Hello from jokes editor form</h2>
+
       {/* {jokeToEditError && JSON.stringify(jokeToEditError?.message)} */}
       <Container maxWidth='sm'>
         <form>

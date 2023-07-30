@@ -13,6 +13,7 @@ interface editJokeState {
   isLoading: boolean
   isNewJoke: boolean
   error: any
+  success: boolean
 }
 
 // Define the initial state using that type
@@ -20,7 +21,8 @@ const initialState: editJokeState = {
   jokeToEdit: {},
   isLoading: false,
   isNewJoke: false,
-  error: null
+  error: null,
+  success: false
 }
 
 export const updateJokeThunk = createAsyncThunk(
@@ -69,6 +71,9 @@ export const editJokeSlice = createSlice({
     },
     setEditJokeError: (state, action) => {
       state.error = action.payload
+    },
+    setEditJokeSuccess: (state, action) => {
+      state.success = action.payload
     }
   },
 
@@ -78,10 +83,12 @@ export const editJokeSlice = createSlice({
       .addCase(updateJokeThunk.pending, state => {
         state.isLoading = true
         state.error = null
+        state.success = false
         console.log('pending')
       })
       .addCase(updateJokeThunk.fulfilled, state => {
         state.isLoading = false
+        state.success = true
         console.log('fulfilled')
       })
       .addCase(updateJokeThunk.rejected, (state, action) => {
@@ -93,10 +100,12 @@ export const editJokeSlice = createSlice({
       .addCase(deleteJokeThunk.pending, state => {
         state.isLoading = true
         state.error = null
+        state.success = false
         console.log('delete pending')
       })
       .addCase(deleteJokeThunk.fulfilled, state => {
         state.isLoading = false
+        state.success = true
         console.log('delete fulfilled')
       })
       .addCase(deleteJokeThunk.rejected, (state, action) => {
@@ -108,10 +117,12 @@ export const editJokeSlice = createSlice({
       .addCase(createJokeThunk.pending, state => {
         state.isLoading = true
         state.error = null
+        state.success = false
         console.log('create pending')
       })
       .addCase(createJokeThunk.fulfilled, state => {
         state.isLoading = false
+        state.success = true
         console.log('create fulfilled')
       })
       .addCase(createJokeThunk.rejected, (state, action) => {
@@ -122,8 +133,12 @@ export const editJokeSlice = createSlice({
   }
 })
 
-export const { setJokeToEdit, setIsNewJoke, setEditJokeError } =
-  editJokeSlice.actions
+export const {
+  setJokeToEdit,
+  setIsNewJoke,
+  setEditJokeError,
+  setEditJokeSuccess
+} = editJokeSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const jokeToEditSelector = (state: RootState) =>
@@ -131,5 +146,8 @@ export const jokeToEditSelector = (state: RootState) =>
 export const isNewJokeSelector = (state: RootState) => state.editJoke.isNewJoke
 export const jokeToEditErrorSelector = (state: RootState) =>
   state.editJoke.error
+
+export const jokeToEditSuccessSelector = (state: RootState) =>
+  state.editJoke.success
 
 export default editJokeSlice.reducer
