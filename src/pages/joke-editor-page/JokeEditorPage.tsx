@@ -6,9 +6,10 @@ import {
   updateJokeThunk
 } from '../../state-management/slices/editJokeSlice.ts'
 import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../../store.ts'
 
 const JokeEditorPage = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
   const jokeToEdit = useSelector(jokeToEditSelector)
   useEffect(() => {
     console.log('joke to edit', jokeToEdit)
