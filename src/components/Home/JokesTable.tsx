@@ -21,24 +21,28 @@ import LastPageIcon from '@mui/icons-material/LastPage'
 import { TablePaginationActionsProps } from '@mui/material/TablePagination/TablePaginationActions'
 import Moment from 'react-moment'
 
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  // hide last border in the row
+  '&:last-child td, &:last-child th': {
+    border: 0,
+    borderRight: `2px solid ${theme.palette.text.primary}`
+  }
+}))
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 14
-  }
-}))
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.hover
+    fontSize: 14,
+    borderRight: `2px solid ${theme.palette.text.primary}`
   },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-    border: 0
-  }
+  borderRight: `2px solid ${theme.palette.text.primary}`,
+  '&:last-child, &:last-child td': {
+    borderRight: 0
+  },
+  borderBottom: 0
 }))
 
 function TablePaginationActions (props: TablePaginationActionsProps) {
@@ -170,7 +174,7 @@ const JokesTable = () => {
                   {joke.views}
                 </StyledTableCell>
 
-                <StyledTableCell align='left'>
+                <StyledTableCell align='left' style={{ borderRight: 0 }}>
                   {' '}
                   {joke.createdAt ? (
                     <Moment format='D MMM YYYY'>{joke.createdAt}</Moment>
