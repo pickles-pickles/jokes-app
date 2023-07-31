@@ -5,15 +5,27 @@ import App from './App'
 import { Provider } from 'react-redux'
 import { store } from './store.ts'
 import { BrowserRouter as Router } from 'react-router-dom'
+import { Auth0Provider } from '@auth0/auth0-react'
 import reportWebVitals from './reportWebVitals'
 
+const onRedirectCallback = a => {
+  //window.history.push(window.location.pathname)
+  window.history.pushState({}, '', '/')
+}
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Router>
-        <App />
-      </Router>
+      <Auth0Provider
+        domain='dev-q24wbzbyl7xpvd1b.us.auth0.com'
+        clientId='BdUlW7xUiGidyrM7FONSZQrtjnDYYRGn'
+        redirectUri={window.location.origin}
+        onRedirectCallback={onRedirectCallback}
+      >
+        <Router>
+          <App />
+        </Router>
+      </Auth0Provider>
     </Provider>
     ,
   </React.StrictMode>
