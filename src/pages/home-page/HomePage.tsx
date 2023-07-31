@@ -17,6 +17,7 @@ import {
 } from '../../state-management/slices/editJokeSlice.ts'
 import { styled } from '@mui/material/styles'
 import { useSelector } from 'react-redux'
+import { Auth0Client } from '@auth0/auth0-spa-js'
 
 const StyledLink = styled(Link)(({ theme }) => ({
   color: theme.palette.text.secondary
@@ -44,6 +45,30 @@ const HomePage = () => {
     )
     dispatch(setIsNewJoke(true))
   }
+
+  const auth0 = new Auth0Client({
+    domain: '<AUTH0_DOMAIN>',
+    clientId: '<AUTH0_CLIENT_ID>',
+    authorizationParams: {
+      redirect_uri: '<MY_CALLBACK_URL>'
+    }
+  })
+
+  useEffect(() => {
+    //store key to local storage, when page loads
+    const callJKey = async () => {
+      try {
+        await auth0.getTokenSilently()
+        console.log('key')
+      } catch (error: any) {
+        if (error.error !== 'login_required') {
+          throw error
+        }
+      }
+    }
+    callJKey()
+  }, [auth0])
+
   return (
     <>
       <h1>Hello from Home page</h1>
