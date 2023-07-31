@@ -6,6 +6,7 @@ import { Provider } from 'react-redux'
 import { store } from './store.ts'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Auth0Provider } from '@auth0/auth0-react'
+import authConfig from './auth_config.json'
 import reportWebVitals from './reportWebVitals'
 
 const onRedirectCallback = a => {
@@ -17,8 +18,8 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <Auth0Provider
-        domain='dev-q24wbzbyl7xpvd1b.us.auth0.com'
-        clientId='BdUlW7xUiGidyrM7FONSZQrtjnDYYRGn'
+        domain={authConfig.domain}
+        clientId={authConfig.clientId}
         redirectUri={window.location.origin}
         onRedirectCallback={onRedirectCallback}
       >
