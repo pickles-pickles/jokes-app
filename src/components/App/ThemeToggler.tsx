@@ -22,8 +22,8 @@ const ThemeToggler = () => {
         }}
         aria-label='Platform'
       >
-        <ToggleButton value='light'>'🔆'</ToggleButton>
-        <ToggleButton value='dark'>'🌙'</ToggleButton>
+        <ToggleButton value='light'>🔆</ToggleButton>
+        <ToggleButton value='dark'>🌙</ToggleButton>
       </ToggleButtonGroup>
     </>
   )
