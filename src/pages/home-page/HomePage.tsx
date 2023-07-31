@@ -46,17 +46,16 @@ const HomePage = () => {
     dispatch(setIsNewJoke(true))
   }
 
-  const auth0 = new Auth0Client({
-    domain: '<AUTH0_DOMAIN>',
-    clientId: '<AUTH0_CLIENT_ID>',
-    authorizationParams: {
-      redirect_uri: '<MY_CALLBACK_URL>'
-    }
-  })
-
   useEffect(() => {
     //store key to local storage, when page loads
     const callJKey = async () => {
+      const auth0 = new Auth0Client({
+        domain: '<AUTH0_DOMAIN>',
+        clientId: '<AUTH0_CLIENT_ID>',
+        authorizationParams: {
+          redirect_uri: '<MY_CALLBACK_URL>'
+        }
+      })
       try {
         await auth0.getTokenSilently()
         console.log('key')
@@ -67,7 +66,7 @@ const HomePage = () => {
       }
     }
     callJKey()
-  }, [auth0])
+  }, [])
 
   return (
     <>
