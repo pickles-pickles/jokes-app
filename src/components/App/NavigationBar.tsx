@@ -12,6 +12,7 @@ const NavigationBar = () => {
   const { logout } = useAuth0()
 
   const handleLogout = () => {
+    localStorage.removeItem('token')
     logout({ returnTo: window.location.origin })
   }
   return (

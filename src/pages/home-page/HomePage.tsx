@@ -18,6 +18,7 @@ import {
 import { styled } from '@mui/material/styles'
 import { useSelector } from 'react-redux'
 import { Auth0Client } from '@auth0/auth0-spa-js'
+import authConfig from '../../auth_config.json'
 
 const StyledLink = styled(Link)(({ theme }) => ({
   color: theme.palette.text.secondary
@@ -50,18 +51,19 @@ const HomePage = () => {
     //store key to local storage, when page loads
     const callJKey = async () => {
       const auth0 = new Auth0Client({
-        domain: '<AUTH0_DOMAIN>',
-        clientId: '<AUTH0_CLIENT_ID>',
+        domain: authConfig.domain,
+        clientId: authConfig.clientId,
         authorizationParams: {
-          redirect_uri: '<MY_CALLBACK_URL>'
+          redirect_uri: 'http://localhost:3000'
         }
       })
       try {
-        await auth0.getTokenSilently()
+        const token = await auth0.getTokenSilently()
+        localStorage.setItem('token', token)
         console.log('key')
       } catch (error: any) {
         if (error.error !== 'login_required') {
-          throw error
+          console.log('could not fetch token')
         }
       }
     }
